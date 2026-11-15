@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Action Design | Ipsa Patel Studio</title>
+<meta name="description" content="Live lettering and etching at weddings, showers, and brand events by Ipsa Patel.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="mark" href="index.html">IPA</a>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="work.html">Work</a></li>
+      <li><a href="live.html" aria-current="page">Live</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <section class="band" style="margin-top:0">
+    <div class="wrap">
+      <div>
+        <h2>Live action design</h2>
+        <p>Guests watch their name appear on a gold compact, a glass, or a sign, and take it home. It becomes the favor and the entertainment at once.</p>
+        <div class="btns"><a class="btn solid" href="#inquire">Ask about your date</a></div>
+      </div>
+      <div class="slot wide"><span>Video still: etching a compact</span></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2 class="h2">From first note to take-home</h2>
+      <div class="steps">
+        <div class="step"><h3>You tell me about the event</h3><p>Date, place, guest count, and what you would like guests to leave with.</p></div>
+        <div class="step"><h3>We choose the pieces</h3><p>Compacts, glasses, signs, or a mix. I bring the materials and set up a small station.</p></div>
+        <div class="step"><h3>Guests watch it happen</h3><p>Each name is lettered and etched on the spot, so every guest gets something made for them.</p></div>
+      </div>
+
+      <h2 class="h2" style="margin-top:72px">Good fits</h2>
+      <div class="occ">
+        <div><b>Weddings</b><span>Favors, welcome parties, and sangeet nights</span></div>
+        <div><b>Showers</b><span>Bridal and baby, with names on every gift</span></div>
+        <div><b>Brand events</b><span>Pop-ups and launches with a personal touch</span></div>
+        <div><b>Gifting</b><span>Corporate and holiday sets, made to order</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="inquire">
+    <div class="wrap contactgrid">
+      <div>
+        <p class="eyebrow">Inquire</p>
+        <h2 class="h2">Tell me about your event</h2>
+        <p class="lede">Fill this in and it builds a message for you. Copy it, or open it in your email app. Nothing is sent until you send it.</p>
+      </div>
+      <form class="inq" id="inq" autocomplete="off">
+        <label>Your name<input type="text" name="name" id="f-name" placeholder="Name"></label>
+        <label>What is it for?
+          <select name="kind" id="f-kind">
+            <option>A wedding</option><option>A shower</option><option>A brand event</option><option>Gifts</option><option>Something else</option>
+          </select>
+        </label>
+        <div class="two">
+          <label>Date<input type="date" name="date" id="f-date"></label>
+          <label>Guests or quantity<input type="text" name="size" id="f-size" placeholder="For example, 150"></label>
+        </div>
+        <label>Anything else?<textarea name="note" id="f-note" placeholder="Place, theme, what you have in mind"></textarea></label>
+        <div class="btns">
+          <button class="btn solid" type="button" id="inqcopy">Copy message</button>
+          <a class="btn" id="inqmail" href="#">Open in email</a>
+        </div>
+        <div class="out" id="inqout" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>&copy; 2026 IPSA PATEL</footer>
+<script src="main.js"></script>
+</body>
+</html>
