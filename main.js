@@ -1,9 +1,9 @@
 /* Edit the two lines below once, and every page updates. */
 var SITE = {
-  email: "your-email@example.com",
+  email: "ipsa.patel02@gmail.com",
   instagram: "https://www.instagram.com/designedbyipsa",
   linkedin: "https://www.linkedin.com/",
-  pinterest: "https://www.pinterest.com/"
+  pinterest: "https://www.pinterest.com/ipsapatel/"
 };
 
 (function () {
@@ -98,3 +98,68 @@ var SITE = {
     });
   }
 })();
+
+// Floating photos: ease toward the cursor. Skipped when the visitor prefers reduced motion.
+(function () {
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+  var root = document.documentElement, tx = 0, ty = 0, cx = 0, cy = 0, running = false;
+  function tick() {
+    cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+    root.style.setProperty("--mx", cx.toFixed(3)); root.style.setProperty("--my", cy.toFixed(3));
+    if (Math.abs(tx - cx) > 0.002 || Math.abs(ty - cy) > 0.002) requestAnimationFrame(tick); else running = false;
+  }
+  window.addEventListener("pointermove", function (e) {
+    tx = (e.clientX / window.innerWidth) * 2 - 1; ty = (e.clientY / window.innerHeight) * 2 - 1;
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }, { passive: true });
+})();
+
+// Cover: a click anywhere on it scrolls down to the details.
+(function () {
+  var hero = document.querySelector(".hero"), target = document.getElementById("start");
+  if (!hero || !target) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function go() { target.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" }); }
+  hero.addEventListener("click", function (e) { if (e.target.closest("a") && !e.target.closest(".cue")) return; e.preventDefault(); go(); });
+  hero.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+})();
+
+// Typed entrance for the cover headline. Text stays readable if scripts fail or motion is reduced.
+(function () {
+  var h1 = document.getElementById("type-h1"), hero = document.querySelector(".hero");
+  if (!h1 || !hero) return;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduce) return;
+  var text = h1.textContent.trim(), chars = [], caret = document.createElement("span");
+  try {
+    h1.setAttribute("aria-label", text);
+    h1.textContent = "";
+    text.split(" ").forEach(function (word, i, all) {
+      var w = document.createElement("span"); w.className = "w"; w.setAttribute("aria-hidden", "true");
+      word.split("").forEach(function (c) { var s = document.createElement("span"); s.className = "ch"; s.textContent = c; w.appendChild(s); chars.push(s); });
+      h1.appendChild(w);
+      if (i < all.length - 1) h1.appendChild(document.createTextNode(" "));
+    });
+    caret.className = "caret"; caret.setAttribute("aria-hidden", "true");
+    hero.classList.add("typing");
+  } catch (e) { return; }
+  var n = 0, done = false;
+  function finish() {
+    if (done) return; done = true;
+    chars.forEach(function (s) { s.classList.add("on"); });
+    hero.classList.remove("typing");
+    setTimeout(function () { if (caret.parentNode) caret.parentNode.removeChild(caret); }, 2200);
+  }
+  function step() {
+    if (done) return;
+    if (n >= chars.length) { finish(); return; }
+    var s = chars[n++]; s.classList.add("on"); s.parentNode.insertBefore(caret, s.nextSibling);
+    setTimeout(step, 45 + Math.random() * 55);
+  }
+  setTimeout(step, 500);
+  setTimeout(finish, 6000); // safety net
+})();
+
+/* recording timecode */
+(function(){ var t=document.getElementById('tc'); if(!t) return; var s=0; function p(n){return (n<10?'0':'')+n;} setInterval(function(){ s=(s+1)%3600; t.textContent='00:'+p(Math.floor(s/60))+':'+p(s%60); },1000); })();
