@@ -26,7 +26,7 @@ var SITE = {
   var chips = document.querySelectorAll(".chip");
   var items = document.querySelectorAll(".item");
   var count = document.getElementById("count");
-  var names = { all: "All work", etching: "Etching and lettering", weddings: "Weddings and events", signage: "Signage", digital: "Digital graphics" };
+  var names = { all: "All work", etching: "Etching and lettering", weddings: "Weddings and events", signage: "Signage", digital: "Print and digital design", art: "Art and handmade" };
   function apply(cat) {
     if (!names[cat]) cat = "all";
     var shown = 0;
