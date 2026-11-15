@@ -342,3 +342,38 @@ footer .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .wt .recdot b { width:8px; height:8px; border-radius:50%; background:#ff4d6d; animation:blink 1.4s steps(2,jump-none) infinite; }
 @media (max-width:860px){ .card.wideband{ grid-template-columns:1fr; } .wb-collage{ order:-1; grid-template-columns:repeat(2,1fr); grid-template-rows:repeat(3,150px); min-height:0; } .wt.t1{ grid-row:span 3; } .wt.t5{ display:none; } }
 .wb-text h3 { font-size:clamp(28px,3.2vw,46px); }
+
+/* glow that traces the logo outline */
+.bgglow { position:absolute; inset:0; z-index:0; pointer-events:none; filter: blur(16px); opacity:.2; animation: glow 8s ease-in-out infinite; }
+.bgglow .bglogo { opacity:.7; background:linear-gradient(135deg,var(--accent),var(--accent2)); }
+@keyframes glow { 0%,100% { opacity:.12; } 50% { opacity:.3; } }
+.bglogo.bgcut { background:var(--bg); opacity:1; }
+@media (prefers-reduced-motion: reduce) { .bgglow { animation: none; } }
+
+/* floating specks on the cover */
+.specks { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.speck { position:absolute; border-radius:50%; background:var(--accent2); opacity:0; box-shadow:0 0 10px 2px color-mix(in srgb, var(--accent) 55%, transparent); animation: drift var(--t,16s) ease-in-out var(--dl,0s) infinite; }
+@keyframes drift { 0% { opacity:0; transform:translate(0,0); } 20% { opacity:var(--o,.5); } 80% { opacity:var(--o,.5); } 100% { opacity:0; transform:translate(var(--dx,20px), var(--dy,-90px)); } }
+@media (prefers-reduced-motion: reduce) { .speck { animation:none; opacity:.25; } }
+.speck.dia { border-radius:0; transform-origin:center; background:linear-gradient(135deg,var(--accent2),var(--accent)); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%); box-shadow:none; filter:drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 70%, transparent)); animation-name: driftd; }
+@keyframes driftd { 0% { opacity:0; transform:translate(0,0) rotate(0deg) scale(.8); } 20% { opacity:var(--o,.5); } 80% { opacity:var(--o,.5); } 100% { opacity:0; transform:translate(var(--dx,20px), var(--dy,-90px)) rotate(var(--rot,90deg)) scale(1.1); } }
+
+/* wish theme: four-point sparkles instead of diamonds, plus a rare shooting star */
+.speck.dia { clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%); }
+.shoot { position:absolute; left:var(--x,70%); top:var(--y,18%); width:130px; height:1.5px; border-radius:2px; background:linear-gradient(90deg,transparent,var(--accent2)); opacity:0; transform:rotate(28deg); pointer-events:none; animation: shoot 14s ease-in var(--sd,3s) infinite; }
+@keyframes shoot { 0%,92% { opacity:0; transform:translate(0,0) rotate(28deg); } 93% { opacity:.8; } 100% { opacity:0; transform:translate(260px,140px) rotate(28deg); } }
+@media (prefers-reduced-motion: reduce) { .shoot { display:none; } }
+
+/* name meaning */
+.wish { display:inline-flex; align-items:baseline; gap:10px; margin:26px 0 22px !important; padding:8px 18px; border:1px solid var(--line); border-radius:999px; background:color-mix(in srgb, var(--accent) 8%, transparent); color:var(--text); }
+.wish b { font-weight:500; letter-spacing:.04em; }
+.wish span { font-family:"Noto Serif Devanagari",serif; color:var(--accent2); }
+.wish em { font-style:normal; font-family:var(--font-mono); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+.wish em::before { content:"\2726  "; }
+
+/* opening shooting star */
+.intro-star { position:absolute; left:0; top:0; width:170px; height:2px; border-radius:2px; z-index:2; pointer-events:none; opacity:0; transform-origin:100% 50%;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--accent2) 85%,transparent)); }
+.intro-star::after { content:""; position:absolute; right:-3px; top:50%; width:7px; height:7px; margin-top:-3.5px; border-radius:50%; background:#fff; box-shadow:0 0 14px 4px color-mix(in srgb,var(--accent) 80%,transparent); }
+.intro-flash { position:absolute; left:0; top:0; width:70px; height:70px; margin:-35px 0 0 -35px; border-radius:50%; z-index:2; pointer-events:none; opacity:0; background:radial-gradient(closest-side,color-mix(in srgb,var(--accent2) 70%,transparent),transparent); }
+@media (prefers-reduced-motion: reduce) { .intro-star, .intro-flash { display:none; } }
