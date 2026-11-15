@@ -307,3 +307,7 @@ footer .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .sig::before { content:""; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 12px var(--accent); }
 .sig .mono { font:11px var(--font-mono); letter-spacing:.14em; text-transform:uppercase; color:var(--muted); padding-left:12px; border-left:1px solid var(--line); margin:0; }
 .sig { text-transform:uppercase; letter-spacing:.3em; font-size:clamp(13px,1.4vw,16px); font-weight:600; padding:13px 26px 13px 22px; }
+
+/* personal statement */
+.statement { font-family:var(--font-head); font-weight:600; letter-spacing:-.03em; line-height:1.12; font-size:clamp(28px,4.6vw,60px); max-width:20em; margin:14px 0 0; background:linear-gradient(180deg,#fff,var(--accent2) 120%); -webkit-background-clip:text; background-clip:text; color:transparent; padding-bottom:.1em; }
+.pull { font-family:var(--font-head); font-weight:500; letter-spacing:-.02em; line-height:1.25; font-size:clamp(20px,2.2vw,28px); color:var(--accent2); margin:22px 0 26px; padding-left:20px; border-left:2px solid var(--accent); }
