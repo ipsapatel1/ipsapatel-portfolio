@@ -163,3 +163,18 @@ var SITE = {
 
 /* recording timecode */
 (function(){ var t=document.getElementById('tc'); if(!t) return; var s=0; function p(n){return (n<10?'0':'')+n;} setInterval(function(){ s=(s+1)%3600; t.textContent='00:'+p(Math.floor(s/60))+':'+p(s%60); },1000); })();
+
+/* video playlists and in-view reel */
+(function(){
+  document.querySelectorAll("video[data-playlist]").forEach(function(v){
+    var list=v.dataset.playlist.split(","), i=0;
+    v.addEventListener("ended",function(){ i=(i+1)%list.length; v.removeAttribute("poster"); v.src=list[i]; v.play().catch(function(){}); });
+  });
+  var rc=document.querySelectorAll("video[data-src]");
+  if(rc.length && "IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){
+      var v=e.target; if(e.isIntersecting){ if(!v.src&&v.dataset.src) v.src=v.dataset.src; v.play().catch(function(){}); } else { v.pause(); }
+    }); },{threshold:.5});
+    rc.forEach(function(v){ io.observe(v); });
+  }
+})();
