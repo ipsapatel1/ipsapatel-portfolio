@@ -377,3 +377,16 @@ footer .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .intro-star::after { content:""; position:absolute; right:-3px; top:50%; width:7px; height:7px; margin-top:-3.5px; border-radius:50%; background:#fff; box-shadow:0 0 14px 4px color-mix(in srgb,var(--accent) 80%,transparent); }
 .intro-flash { position:absolute; left:0; top:0; width:70px; height:70px; margin:-35px 0 0 -35px; border-radius:50%; z-index:2; pointer-events:none; opacity:0; background:radial-gradient(closest-side,color-mix(in srgb,var(--accent2) 70%,transparent),transparent); }
 @media (prefers-reduced-motion: reduce) { .intro-star, .intro-flash { display:none; } }
+
+/* work cards: image only */
+.item { padding: 10px; }
+/* lightbox: always fit the whole photo */
+.lb .stage { position: relative; aspect-ratio: auto; height: min(76vh, 820px); max-height: none; }
+.lb .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+/* More in motion: endless slow scroll */
+.reel { display:block; overflow:hidden; padding-bottom:0; scroll-snap-type:none; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+.reel-track { display:flex; gap:14px; width:max-content; padding-right:14px; animation: reelmove 55s linear infinite; }
+.reel:hover .reel-track { animation-play-state: paused; }
+@keyframes reelmove { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .reel { overflow-x:auto; } .reel-track { animation:none; } }

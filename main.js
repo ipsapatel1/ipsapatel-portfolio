@@ -45,7 +45,7 @@ var SITE = {
 
   var lb = document.getElementById("lb");
   if (lb) {
-    var stage = lb.querySelector(".stage"), title = lb.querySelector("h3"), cap = lb.querySelector(".cap p");
+    var stage = lb.querySelector(".stage");
     var current = 0, visible = [];
     function list() { return Array.prototype.filter.call(items, function (i) { return !i.hidden; }); }
     function show(n) {
@@ -55,8 +55,6 @@ var SITE = {
       stage.innerHTML = "";
       if (img) { var big = document.createElement("img"); big.src = img.src; big.alt = img.alt; stage.appendChild(big); }
       else { var ph = document.createElement("div"); ph.className = "ph"; ph.textContent = "IPA"; stage.appendChild(ph); }
-      title.textContent = it.querySelector("h3").textContent;
-      cap.textContent = it.querySelector("p").textContent;
     }
     function open(n) { show(n); lb.classList.add("open"); lb.querySelector("[data-close]").focus(); }
     function close() { lb.classList.remove("open"); }
@@ -214,6 +212,7 @@ var SITE = {
 /* Design in motion: start each clip halfway through, including when it loops */
 (function(){
   document.querySelectorAll(".rec video, .reel video").forEach(function(v){
+    if(v.hasAttribute("data-full")) return;
     function half(){ if(v.duration && isFinite(v.duration)) { try { v.currentTime = v.duration/2; } catch(e){} } }
     v.addEventListener("loadedmetadata", half);
     if(v.readyState>=1 && v.currentTime<1) half();
