@@ -404,3 +404,14 @@ footer .links { display: flex; flex-wrap: wrap; gap: 8px; }
 /* page-wide specks sit behind content */
 .page-specks { position:fixed; inset:0; z-index:0; }
 body.has-specks main, body.has-specks footer { position:relative; z-index:1; }
+
+/* Home: In motion card with a blurred video behind the words */
+.card.motionband { margin-top:14px; min-height:clamp(280px,32vw,420px); padding:clamp(24px,3.4vw,44px); }
+.card.motionband .slot { opacity:1; background:var(--card2); }
+.card.motionband .slot video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:none; transform:none; }
+.card.motionband::after { background:linear-gradient(90deg, color-mix(in srgb,var(--bg) 70%,transparent), color-mix(in srgb,var(--bg) 20%,transparent) 62%, transparent), linear-gradient(0deg, color-mix(in srgb,var(--bg) 70%,transparent), transparent 55%); }
+.card.motionband h3 { font-size:clamp(32px,5vw,64px); max-width:14ch; }
+.card.motionband .wb-more { margin-top:18px; }
+.card.motionband:hover .wb-more { color:var(--fg); }
+.card.motionband .recdot { position:absolute; top:22px; left:26px; display:inline-flex; align-items:center; gap:8px; font:11px var(--font-mono); letter-spacing:.14em; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.6); }
+.card.motionband .recdot b { width:8px; height:8px; border-radius:50%; background:#ff4d6d; animation:blink 1.4s steps(2,jump-none) infinite; }

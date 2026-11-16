@@ -211,7 +211,7 @@ var SITE = {
 
 /* Design in motion: start each clip halfway through, including when it loops */
 (function(){
-  document.querySelectorAll(".rec video, .reel video").forEach(function(v){
+  document.querySelectorAll(".rec video, .reel video, .motionband video").forEach(function(v){
     if(v.hasAttribute("data-full")) return;
     function half(){ if(v.duration && isFinite(v.duration)) { try { v.currentTime = v.duration/2; } catch(e){} } }
     v.addEventListener("loadedmetadata", half);
