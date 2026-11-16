@@ -2,7 +2,7 @@
 var SITE = {
   email: "ipsa.patel02@gmail.com",
   instagram: "https://www.instagram.com/designedbyipsa",
-  linkedin: "https://www.linkedin.com/",
+  linkedin: "https://www.linkedin.com/in/ipsa-patel/",
   pinterest: "https://www.pinterest.com/ipsapatel/"
 };
 
