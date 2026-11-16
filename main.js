@@ -222,3 +222,19 @@ var SITE = {
     }
   });
 })();
+
+/* Soft floating specks behind the other pages (the home cover has its own) */
+(function(){
+  if(document.querySelector(".hero")) return;
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  document.body.classList.add("has-specks");
+  var box=document.createElement("div"); box.className="specks page-specks"; box.setAttribute("aria-hidden","true");
+  var n=window.innerWidth<720?10:20;
+  for(var i=0;i<n;i++){
+    var s=document.createElement("i"); s.className="speck";
+    var dia=Math.random()<.3; var size=dia?(8+Math.random()*7):(1.5+Math.random()*3); if(dia) s.className="speck dia";
+    s.style.cssText="left:"+(Math.random()*100)+"%;top:"+(5+Math.random()*90)+"%;width:"+size+"px;height:"+size+"px;--t:"+(16+Math.random()*16)+"s;--dl:"+(-Math.random()*24)+"s;--o:"+(.2+Math.random()*.3)+";--dx:"+((Math.random()-.5)*60)+"px;--dy:"+(-40-Math.random()*110)+"px;--rot:"+((Math.random()-.5)*180)+"deg";
+    box.appendChild(s);
+  }
+  document.body.insertBefore(box,document.body.firstChild);
+})();

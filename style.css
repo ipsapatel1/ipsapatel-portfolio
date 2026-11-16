@@ -285,7 +285,7 @@ footer .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .rec .clip.c2 { background:radial-gradient(120% 90% at 50% 0%, color-mix(in srgb,var(--accent2) 22%,var(--card2)), var(--card) 70%); }
 .rec .clip video,.rec .clip img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
 .rec .clip span { position:relative; padding:16px 20px; font:11px var(--font-mono); letter-spacing:.12em; text-transform:uppercase; color:var(--muted); }
-.rec::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(12,10,18,.55),transparent 28%,transparent 45%,rgba(12,10,18,.8)); }
+.rec::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(180deg,rgba(12,10,18,.55),transparent 28%,transparent 38%,rgba(12,10,18,.88)); }
 .rec .cn { position:absolute; width:26px; height:26px; z-index:2; border:2px solid var(--accent2); opacity:.9; pointer-events:none; }
 .rec .tl { top:18px; left:18px; border-right:0; border-bottom:0; } .rec .tr { top:18px; right:18px; border-left:0; border-bottom:0; }
 .rec .bl { bottom:18px; left:18px; border-right:0; border-top:0; } .rec .br { bottom:18px; right:18px; border-left:0; border-top:0; }
@@ -390,3 +390,17 @@ footer .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .reel:hover .reel-track { animation-play-state: paused; }
 @keyframes reelmove { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .reel { overflow-x:auto; } .reel-track { animation:none; } }
+
+/* Motion title: one clean line on a soft scrim */
+.rec-title { left:56px; right:56px; bottom:62px; text-align:left; font-size:clamp(30px,5.2vw,76px); line-height:1.05; letter-spacing:-.03em; }
+.rec-title br { display:none; }
+@media (max-width:760px) { .rec-title { left:34px; right:34px; bottom:50px; font-size:clamp(26px,8vw,40px); } }
+
+/* Motion title: same name-pill style as the home cover */
+.rec-title { left:0; right:0; bottom:58px; text-align:center; background:none; -webkit-background-clip:border-box; background-clip:border-box; -webkit-text-fill-color:initial; font-size:inherit; line-height:1; letter-spacing:normal; }
+.rec-title .sig { margin:0; }
+@media (max-width:760px) { .rec-title { left:0; right:0; bottom:50px; font-size:inherit; } }
+
+/* page-wide specks sit behind content */
+.page-specks { position:fixed; inset:0; z-index:0; }
+body.has-specks main, body.has-specks footer { position:relative; z-index:1; }
