@@ -210,3 +210,16 @@ var SITE = {
   fl.animate([{transform:"translate("+ex+"px,"+ey+"px) scale(.2)",opacity:0},{transform:"translate("+ex+"px,"+ey+"px) scale(1)",opacity:.9,offset:.35},{transform:"translate("+ex+"px,"+ey+"px) scale(1.6)",opacity:0}],{duration:700,delay:520,fill:"both"});
   setTimeout(function(){st.remove();fl.remove();},2200);
 })();
+
+/* Design in motion: start each clip halfway through, including when it loops */
+(function(){
+  document.querySelectorAll(".rec video, .reel video").forEach(function(v){
+    function half(){ if(v.duration && isFinite(v.duration)) { try { v.currentTime = v.duration/2; } catch(e){} } }
+    v.addEventListener("loadedmetadata", half);
+    if(v.readyState>=1 && v.currentTime<1) half();
+    if(v.hasAttribute("loop")){
+      v.removeAttribute("loop");
+      v.addEventListener("ended", function(){ half(); v.play().catch(function(){}); });
+    }
+  });
+})();
