@@ -238,3 +238,49 @@ var SITE = {
   }
   document.body.insertBefore(box,document.body.firstChild);
 })();
+
+/* Studio reel: drifts on its own, can be swiped or scrolled, and wraps around endlessly */
+(function(){
+  var reel=document.querySelector(".reel"), track=reel&&reel.querySelector(".reel-track");
+  if(!reel||!track) return;
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var pos=0, held=false, resumeAt=0, last=0;
+  function half(){ return track.scrollWidth/4; }
+  function wrap(){
+    var h=half(); if(!h) return;
+    if(reel.scrollLeft>=h+1){ reel.scrollLeft-=h; pos=reel.scrollLeft; }
+    else if(reel.scrollLeft<1){ reel.scrollLeft+=h; pos=reel.scrollLeft; }
+  }
+  function pause(ms){ resumeAt=performance.now()+ms; }
+  reel.addEventListener("scroll",wrap,{passive:true});
+  reel.addEventListener("touchstart",function(){ held=true; },{passive:true});
+  reel.addEventListener("touchend",function(){ held=false; pause(1800); },{passive:true});
+  reel.addEventListener("touchcancel",function(){ held=false; pause(1800); },{passive:true});
+  reel.addEventListener("wheel",function(){ pause(1500); },{passive:true});
+  reel.addEventListener("mouseenter",function(){ held=true; });
+  reel.addEventListener("mouseleave",function(){ if(!drag) held=false; });
+  /* click and drag with a mouse */
+  var drag=false, sx=0, sl=0, moved=false;
+  reel.addEventListener("mousedown",function(e){ drag=true; moved=false; held=true; sx=e.clientX; sl=reel.scrollLeft; reel.style.cursor="grabbing"; e.preventDefault(); });
+  window.addEventListener("mousemove",function(e){
+    if(!drag) return;
+    var dx=e.clientX-sx; if(Math.abs(dx)>4) moved=true;
+    var h=half(), x=sl-dx;
+    if(h){ x=((x%h)+h)%h; if(x<1) x+=h; }
+    reel.scrollLeft=x;
+  });
+  window.addEventListener("mouseup",function(){ if(!drag) return; drag=false; reel.style.cursor=""; held=reel.matches(":hover"); pause(1200); });
+  reel.addEventListener("click",function(e){ if(moved){ e.preventDefault(); e.stopPropagation(); moved=false; } },true);
+  function tick(t){
+    var dt=Math.min(64,t-(last||t)); last=t;
+    wrap();
+    if(!reduce&&!held&&t>resumeAt&&!document.hidden){
+      if(Math.abs(reel.scrollLeft-pos)>2) pos=reel.scrollLeft;
+      pos+=half()/55000*dt;
+      reel.scrollLeft=pos;
+    } else { pos=reel.scrollLeft; }
+    requestAnimationFrame(tick);
+  }
+  reel.scrollLeft=2; pos=2;
+  requestAnimationFrame(tick);
+})();

@@ -385,11 +385,11 @@ footer .links { display: flex; flex-wrap: wrap; gap: 8px; }
 .lb .stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
 /* More in motion: endless slow scroll */
-.reel { display:block; overflow:hidden; padding-bottom:0; scroll-snap-type:none; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
-.reel-track { display:flex; gap:14px; width:max-content; padding-right:14px; animation: reelmove 55s linear infinite; }
-.reel:hover .reel-track { animation-play-state: paused; }
-@keyframes reelmove { to { transform: translateX(-50%); } }
-@media (prefers-reduced-motion: reduce) { .reel { overflow-x:auto; } .reel-track { animation:none; } }
+.reel { display:block; overflow-x:auto; overflow-y:hidden; padding-bottom:0; scroll-snap-type:none; scrollbar-width:none; -webkit-overflow-scrolling:touch; cursor:grab; -webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent); }
+.reel::-webkit-scrollbar { display:none; }
+.reel { touch-action:pan-x pan-y; user-select:none; -webkit-user-select:none; overscroll-behavior-x:contain; }
+.reel video, .reel img { -webkit-user-drag:none; pointer-events:none; }
+.reel-track { display:flex; gap:14px; width:max-content; padding-right:14px; }
 
 /* Motion title: one clean line on a soft scrim */
 .rec-title { left:56px; right:56px; bottom:62px; text-align:left; font-size:clamp(30px,5.2vw,76px); line-height:1.05; letter-spacing:-.03em; }
