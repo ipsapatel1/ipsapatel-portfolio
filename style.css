@@ -439,3 +439,20 @@ body.has-specks main, body.has-specks footer { position:relative; z-index:1; }
 .hand.pen.prep { opacity:0; }
 .hand.pen.write .hp { stroke-dasharray:1; stroke-dashoffset:1; animation:penwrite var(--t) linear var(--d) forwards; }
 @keyframes penwrite { to { stroke-dashoffset:0; } }
+
+/* ---- Editorial type: Playfair Display headings with italic and calligraphy accents ---- */
+:root { --font-head: "Playfair Display", Georgia, "Times New Roman", serif; --font-script: "La Belle Aurore", cursive; }
+.display, .h2, .card h3, .item h3, .lb .cap h3, .step h3, .frame h3, .rec-title, .statement, .pull, .lb .stage .ph, .occ div, .marq .track { font-weight: 400; letter-spacing: -.01em; }
+.display { line-height: 1.02; }
+.h2 { line-height: 1.04; }
+.card h3, .frame h3, .step h3 { line-height: 1.08; font-weight: 500; }
+.statement { line-height: 1.2; }
+.pull { line-height: 1.35; }
+.marq .track { font-style: italic; }
+h1 em, h2 em, h3 em, .statement em, .pull em { font-style: italic; font-weight: 400; }
+.script { font-family: var(--font-script); font-weight: 400; font-style: normal; letter-spacing: 0; display: inline-block; font-size: 1.12em; line-height: .8; padding: 0 .14em .12em .04em; }
+.script.sm { font-size: .42em; vertical-align: .9em; margin-left: .1em; color: var(--accent2); -webkit-text-fill-color: var(--accent2); }
+.sig .script { font-size: 2.1em; letter-spacing: 0; text-transform: none; }
+/* script words paint their own gradient so tails (g, y) are never clipped by the heading box */
+.grad .script { background:linear-gradient(180deg,#ffffff 15%,var(--g2) 120%); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; line-height:1.15; padding:.05em .18em .32em .06em; margin-bottom:-.27em; vertical-align:baseline; }
+.grad:has(.script) { padding-bottom:.28em; }
