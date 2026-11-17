@@ -456,3 +456,9 @@ h1 em, h2 em, h3 em, .statement em, .pull em { font-style: italic; font-weight: 
 /* script words paint their own gradient so tails (g, y) are never clipped by the heading box */
 .grad .script { background:linear-gradient(180deg,#ffffff 15%,var(--g2) 120%); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; line-height:1.15; padding:.05em .18em .32em .06em; margin-bottom:-.27em; vertical-align:baseline; }
 .grad:has(.script) { padding-bottom:.28em; }
+/* Work: mixed-size columns, every photo shown whole (no cropping) */
+.grid { display:block; columns:3; column-gap:clamp(10px,1.4vw,18px); }
+.item { padding:0; border:0; background:none; border-radius:0; break-inside:avoid; margin:0 0 clamp(10px,1.4vw,18px); }
+.item .slot { aspect-ratio:auto; height:auto; display:block; border-radius:6px; }
+.item .slot img { position:static; width:100%; height:auto; object-fit:contain; }
+@media (max-width:900px) { .grid { columns:2; } }
