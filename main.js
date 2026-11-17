@@ -129,6 +129,25 @@ var SITE = {
   if (!h1 || !hero) return;
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (reduce) return;
+  if (h1.classList.contains("pen")) { // pen-written headline: strokes follow each letter, then the rest fades up
+    var svg = h1.querySelector("svg"), total = parseFloat(svg.getAttribute("data-total")) || 4, started = false;
+    function unmask() { [].forEach.call(svg.querySelectorAll("text"), function (t) { t.removeAttribute("mask"); }); }
+    function begin(ok) {
+      if (started) return; started = true;
+      h1.classList.remove("prep");
+      if (!ok) { unmask(); return; }
+      [].forEach.call(svg.querySelectorAll("text"), function (t) { t.setAttribute("mask", t.getAttribute("data-mask")); });
+      h1.classList.add("write"); hero.classList.add("typing");
+      setTimeout(function () { hero.classList.remove("typing"); unmask(); }, total * 1000 + 250);
+    }
+    h1.classList.add("prep");
+    var fam = '120px "La Belle Aurore"';
+    if (document.fonts && document.fonts.load) {
+      document.fonts.load(fam).then(function (f) { begin(f && f.length > 0); }, function () { begin(false); });
+      setTimeout(function () { begin(false); }, 3000);
+    } else begin(false);
+    return;
+  }
   var text = h1.textContent.trim(), chars = [], caret = document.createElement("span");
   try {
     h1.setAttribute("aria-label", text);
@@ -196,7 +215,7 @@ var SITE = {
   var hero=document.querySelector(".hero"), h1=document.getElementById("type-h1");
   if(!hero||!h1||!hero.animate||window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   var hr=hero.getBoundingClientRect(), f=h1.querySelector("span"), r=(f||h1).getBoundingClientRect();
-  var ex=r.left-hr.left+(f?r.width*.4:8), ey=r.top-hr.top+r.height*.3;
+  var hand=h1.classList.contains("hand"); var ex=r.left-hr.left+(hand?r.width*.05:(f?r.width*.4:8)), ey=r.top-hr.top+r.height*(hand?.22:.3);
   var sx=Math.max(20,ex-hr.width*.32), sy=Math.max(12,ey-hr.height*.42);
   var ang=Math.atan2(ey-sy,ex-sx)*180/Math.PI;
   var st=document.createElement("i"); st.className="intro-star"; st.setAttribute("aria-hidden","true");

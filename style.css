@@ -415,3 +415,27 @@ body.has-specks main, body.has-specks footer { position:relative; z-index:1; }
 .card.motionband:hover .wb-more { color:var(--fg); }
 .card.motionband .recdot { position:absolute; top:22px; left:26px; display:inline-flex; align-items:center; gap:8px; font:11px var(--font-mono); letter-spacing:.14em; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.6); }
 .card.motionband .recdot b { width:8px; height:8px; border-radius:50%; background:#ff4d6d; animation:blink 1.4s steps(2,jump-none) infinite; }
+
+/* handwritten cover headline: Ipsa's own lettering, written in line by line */
+.hero h1.hand { --h1:url(images/hand-script-1.png); --h2:url(images/hand-script-2.png); position:relative; width:min(86vw,880px); aspect-ratio:1500/652; margin:22px auto 18px; }
+.hero h1.hand.print { --h1:url(images/hand-print-1.png); --h2:url(images/hand-print-2.png); aspect-ratio:1500/539; }
+.hand .hl { position:absolute; inset:0; background:linear-gradient(180deg,#ffffff 25%,var(--g2) 100%); -webkit-mask:var(--h1) center/contain no-repeat; mask:var(--h1) center/contain no-repeat; }
+.hand .hl2 { -webkit-mask-image:var(--h2); mask-image:var(--h2); }
+.hand.write .hl { clip-path:inset(-5% 100% -5% 0); animation:handwrite 1.5s cubic-bezier(.45,.05,.55,.95) .55s forwards; }
+.hand.write .hl2 { animation-duration:1.9s; animation-delay:2.1s; }
+@keyframes handwrite { to { clip-path:inset(-5% -2% -5% 0); } }
+@media (prefers-reduced-motion: reduce) { .hand.write .hl { clip-path:none; animation:none; } }
+
+/* font version of the handwritten headline (La Belle Aurore); swap back to .hand alone for Ipsa's own lettering */
+.hero h1.hand.font { width:auto; aspect-ratio:auto; margin:18px auto 14px; font-family:"La Belle Aurore",cursive; font-weight:400; font-size:clamp(46px,10.2vw,128px); line-height:1.08; letter-spacing:0; }
+.hand.font .hl { position:static; display:block; width:max-content; max-width:100%; margin-inline:auto; padding:.12em .22em .2em; -webkit-mask:none; mask:none; background:linear-gradient(180deg,#ffffff 30%,var(--g2) 100%); -webkit-background-clip:text; background-clip:text; color:transparent; white-space:nowrap; }
+.hand.font .hl2 { margin-top:-.18em; }
+
+/* pen-written headline: the font's letters are revealed by strokes that follow each letter */
+.hero h1.hand.pen { width:min(92vw,980px); aspect-ratio:auto; margin:10px auto 6px; font-size:0; line-height:0; }
+.hand.pen .hsvg { display:block; width:100%; height:auto; overflow:visible; }
+.hand.pen text { font-family:"La Belle Aurore",cursive; font-weight:400; font-size:120px; fill:url(#hg); }
+.hand.pen .hp { fill:none; stroke:#fff; stroke-width:15; stroke-linecap:round; stroke-linejoin:round; }
+.hand.pen.prep { opacity:0; }
+.hand.pen.write .hp { stroke-dasharray:1; stroke-dashoffset:1; animation:penwrite var(--t) linear var(--d) forwards; }
+@keyframes penwrite { to { stroke-dashoffset:0; } }
