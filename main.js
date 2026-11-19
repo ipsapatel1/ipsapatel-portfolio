@@ -216,16 +216,21 @@ var SITE = {
   if(!hero||!h1||!hero.animate||window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   var hr=hero.getBoundingClientRect(), f=h1.querySelector("span"), r=(f||h1).getBoundingClientRect();
   var hand=h1.classList.contains("hand"); var ex=r.left-hr.left+(hand?r.width*.05:(f?r.width*.4:8)), ey=r.top-hr.top+r.height*(hand?.22:.3);
-  var sx=Math.max(20,ex-hr.width*.32), sy=Math.max(12,ey-hr.height*.42);
+  var sx=Math.max(20,ex-hr.width*.32), sy=Math.max(12,ey-hr.height*.42), dur=650, fdl=520;
+  if(h1.classList.contains("pen")){ // glide across the top of "details you'll" as it's written
+    sx=r.left-hr.left+r.width*.08; sy=r.top-hr.top+r.height*.0;
+    ex=r.left-hr.left+r.width*.9;  ey=r.top-hr.top+r.height*.1;
+    dur=1500; fdl=1350;
+  }
   var ang=Math.atan2(ey-sy,ex-sx)*180/Math.PI;
   var st=document.createElement("i"); st.className="intro-star"; st.setAttribute("aria-hidden","true");
   var fl=document.createElement("i"); fl.className="intro-flash"; fl.setAttribute("aria-hidden","true");
   hero.appendChild(st); hero.appendChild(fl);
   // star's head is its right edge (origin 100%), so offset by its width
   function pos(x,y){return "translate("+(x-170)+"px,"+(y-1)+"px) rotate("+ang+"deg)";}
-  st.animate([{transform:pos(sx,sy),opacity:0},{opacity:1,offset:.15},{opacity:1,offset:.85},{transform:pos(ex,ey),opacity:0}],{duration:650,delay:0,easing:"cubic-bezier(.4,0,.8,.6)",fill:"both"});
-  fl.animate([{transform:"translate("+ex+"px,"+ey+"px) scale(.2)",opacity:0},{transform:"translate("+ex+"px,"+ey+"px) scale(1)",opacity:.9,offset:.35},{transform:"translate("+ex+"px,"+ey+"px) scale(1.6)",opacity:0}],{duration:700,delay:520,fill:"both"});
-  setTimeout(function(){st.remove();fl.remove();},2200);
+  st.animate([{transform:pos(sx,sy),opacity:0},{opacity:1,offset:.15},{opacity:1,offset:.85},{transform:pos(ex,ey),opacity:0}],{duration:dur,delay:h1.classList.contains("pen")?250:0,easing:h1.classList.contains("pen")?"cubic-bezier(.3,.1,.6,1)":"cubic-bezier(.4,0,.8,.6)",fill:"both"});
+  fl.animate([{transform:"translate("+ex+"px,"+ey+"px) scale(.2)",opacity:0},{transform:"translate("+ex+"px,"+ey+"px) scale(1)",opacity:.9,offset:.35},{transform:"translate("+ex+"px,"+ey+"px) scale(1.6)",opacity:0}],{duration:700,delay:fdl,fill:"both"});
+  setTimeout(function(){st.remove();fl.remove();},3200);
 })();
 
 /* Design in motion: start each clip halfway through, including when it loops */
@@ -302,4 +307,12 @@ var SITE = {
   }
   reel.scrollLeft=2; pos=2;
   requestAnimationFrame(tick);
+})();
+
+/* Logo / Home: on the home page itself, glide back to the top instead of reloading */
+(function(){
+  if(!document.querySelector(".hero")) return;
+  [].forEach.call(document.querySelectorAll('a.brand, .nav a[href="./"]'),function(a){
+    a.addEventListener("click",function(e){ e.preventDefault(); window.scrollTo({top:0,behavior:"smooth"}); });
+  });
 })();
