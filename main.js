@@ -305,6 +305,23 @@ var SITE = {
     } else { pos=reel.scrollLeft; }
     requestAnimationFrame(tick);
   }
+  /* arrow buttons over the edges so people know they can move it themselves */
+  var wrapEl=document.createElement("div"); wrapEl.className="reel-wrap";
+  reel.parentNode.insertBefore(wrapEl,reel); wrapEl.appendChild(reel);
+  var gliding=false;
+  function glide(dir){
+    var fig=track.firstElementChild, step=fig?fig.getBoundingClientRect().width+14:280;
+    var from=reel.scrollLeft, dist=dir*step, t0=null; gliding=true; held=true;
+    function f(t){ if(t0===null) t0=t; var k=Math.min(1,(t-t0)/450), e=1-Math.pow(1-k,3);
+      reel.scrollLeft=from+dist*e; wrap();
+      if(k<1) requestAnimationFrame(f); else { gliding=false; held=reel.matches(":hover"); pos=reel.scrollLeft; pause(2500); } }
+    requestAnimationFrame(f);
+  }
+  [["prev","Previous clips",'<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',-1],["next","More clips",'<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',1]].forEach(function(a){
+    var b=document.createElement("button"); b.type="button"; b.className="reel-arrow "+a[0]; b.setAttribute("aria-label",a[1]); b.innerHTML=a[2];
+    b.addEventListener("click",function(e){ e.stopPropagation(); if(!gliding) glide(a[3]); });
+    wrapEl.appendChild(b);
+  });
   reel.scrollLeft=2; pos=2;
   requestAnimationFrame(tick);
 })();

@@ -462,3 +462,17 @@ h1 em, h2 em, h3 em, .statement em, .pull em { font-style: italic; font-weight: 
 .item .slot { aspect-ratio:auto; height:auto; display:block; border-radius:6px; }
 .item .slot img { position:static; width:100%; height:auto; object-fit:contain; }
 @media (max-width:900px) { .grid { columns:2; } }
+
+/* studio reel arrows */
+.reel-wrap { position:relative; }
+.reel-arrow { position:absolute; top:50%; z-index:3; width:46px; height:46px; margin-top:-23px; border-radius:50%; border:1px solid color-mix(in srgb,var(--fg) 22%,transparent); background:color-mix(in srgb,var(--bg) 62%,transparent); color:var(--fg); font-size:20px; line-height:1; display:grid; place-items:center; cursor:pointer; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); box-shadow:0 6px 22px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.15); transition:transform .2s, background .2s, border-color .2s; }
+.reel-arrow.prev { left:10px; } .reel-arrow.next { right:10px; }
+.reel-arrow:hover { transform:scale(1.07); background:color-mix(in srgb,var(--bg) 40%,transparent); border-color:color-mix(in srgb,var(--accent) 60%,transparent); }
+.reel-arrow:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+@media (max-width:560px) { .reel-arrow { width:40px; height:40px; margin-top:-20px; font-size:18px; } .reel-arrow.prev { left:6px; } .reel-arrow.next { right:6px; } }
+
+.reel-arrow { width:44px; height:64px; margin-top:-32px; border-radius:8px; font-size:0; }
+.reel-arrow svg { display:block; }
+@media (max-width:560px) { .reel-arrow { width:38px; height:54px; margin-top:-27px; } }
+.reel-arrow { background:color-mix(in srgb,var(--accent) 30%,color-mix(in srgb,var(--bg) 55%,transparent)); border-color:color-mix(in srgb,var(--accent) 55%,transparent); color:var(--accent2); box-shadow:0 6px 22px rgba(0,0,0,.55), 0 0 18px color-mix(in srgb,var(--accent) 25%,transparent); }
+.reel-arrow:hover { background:color-mix(in srgb,var(--accent) 45%,color-mix(in srgb,var(--bg) 40%,transparent)); border-color:var(--accent); color:#fff; }
