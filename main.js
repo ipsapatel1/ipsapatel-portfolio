@@ -219,16 +219,16 @@ var SITE = {
   var sx=Math.max(20,ex-hr.width*.32), sy=Math.max(12,ey-hr.height*.42), dur=650, fdl=520;
   if(h1.classList.contains("pen")){ // a gentle curved streak over "details you'll"; the tail bends with the path
     var L=r.left-hr.left, T=r.top-hr.top, Wd=r.width, Ht=r.height;
-    var P0=[L-Wd*.06,T+Ht*1.0], P1=[L+Wd*.5,T-Ht*.92], P2=[L+Wd*1.06,T+Ht*1.0]; // rainbow arc from the bottom
+    var P0=[L+Wd*.06,T+Ht*.36], P1=[L+Wd*.5,T-Ht*.30], P2=[L+Wd*.94,T+Ht*.36]; // small rainbow arc over the first line
     var NS="http://www.w3.org/2000/svg", sv=document.createElementNS(NS,"svg");
     sv.setAttribute("class","intro-trail"); sv.setAttribute("aria-hidden","true");
     sv.setAttribute("width",hr.width); sv.setAttribute("height",hr.height);
-    var segs=[], N=40;
+    var segs=[], N=48;
     for(var i=0;i<N;i++){ var ln=document.createElementNS(NS,"line"); ln.setAttribute("stroke-linecap","round"); sv.appendChild(ln); segs.push(ln); }
-    var head=document.createElementNS(NS,"circle"); head.setAttribute("r","3.6"); head.setAttribute("class","intro-head"); sv.appendChild(head);
+    var head=document.createElementNS(NS,"circle"); head.setAttribute("r","3.4"); head.setAttribute("class","intro-head"); sv.appendChild(head);
     hero.appendChild(sv);
     var cfl=document.createElement("i"); cfl.className="intro-flash"; cfl.setAttribute("aria-hidden","true"); hero.appendChild(cfl);
-    var D=1600, DL=250, TAIL=.5, t0=null;
+    var D=2200, DL=250, TAIL=.45, t0=null;
     function bz(t,i){ t=Math.max(0,t); var u=1-t; return u*u*P0[i]+2*u*t*P1[i]+t*t*P2[i]; }
     function frame(now){
       if(t0===null) t0=now; var k=(now-t0-DL)/D;
@@ -241,8 +241,8 @@ var SITE = {
         var f=1-j/N;
         segs[j].setAttribute("x1",bz(a0,0)); segs[j].setAttribute("y1",bz(a0,1));
         segs[j].setAttribute("x2",bz(a1,0)); segs[j].setAttribute("y2",bz(a1,1));
-        segs[j].setAttribute("stroke-width",(0.5+2.8*f).toFixed(2));
-        segs[j].setAttribute("stroke-opacity",(Math.pow(f,1.6)*.95*fade).toFixed(3));
+        segs[j].setAttribute("stroke-width",(0.4+2.4*Math.pow(f,1.2)).toFixed(2));
+        segs[j].setAttribute("stroke-opacity",(Math.pow(f,2.4)*.95*fade).toFixed(3));
       }
       head.setAttribute("cx",bz(e,0)); head.setAttribute("cy",bz(e,1)); head.setAttribute("opacity",fade.toFixed(3));
       requestAnimationFrame(frame);
