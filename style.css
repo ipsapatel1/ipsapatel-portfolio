@@ -480,3 +480,4 @@ h1 em, h2 em, h3 em, .statement em, .pull em { font-style: italic; font-weight: 
 .intro-trail { position:absolute; left:0; top:0; z-index:2; pointer-events:none; overflow:visible; }
 .intro-trail line { stroke:var(--accent2); }
 .intro-head { fill:#fff; filter:drop-shadow(0 0 6px var(--accent)) drop-shadow(0 0 12px var(--accent)); }
+.intro-trail { z-index:0; } /* behind the headline, above the background */
