@@ -217,10 +217,40 @@ var SITE = {
   var hr=hero.getBoundingClientRect(), f=h1.querySelector("span"), r=(f||h1).getBoundingClientRect();
   var hand=h1.classList.contains("hand"); var ex=r.left-hr.left+(hand?r.width*.05:(f?r.width*.4:8)), ey=r.top-hr.top+r.height*(hand?.22:.3);
   var sx=Math.max(20,ex-hr.width*.32), sy=Math.max(12,ey-hr.height*.42), dur=650, fdl=520;
-  if(h1.classList.contains("pen")){ // glide across the top of "details you'll" as it's written
-    sx=r.left-hr.left+r.width*.08; sy=r.top-hr.top+r.height*.0;
-    ex=r.left-hr.left+r.width*.9;  ey=r.top-hr.top+r.height*.1;
-    dur=1500; fdl=1350;
+  if(h1.classList.contains("pen")){ // a gentle curved streak over "details you'll"; the tail bends with the path
+    var L=r.left-hr.left, T=r.top-hr.top, Wd=r.width, Ht=r.height;
+    var P0=[L-Wd*.06,T+Ht*1.0], P1=[L+Wd*.5,T-Ht*.92], P2=[L+Wd*1.06,T+Ht*1.0]; // rainbow arc from the bottom
+    var NS="http://www.w3.org/2000/svg", sv=document.createElementNS(NS,"svg");
+    sv.setAttribute("class","intro-trail"); sv.setAttribute("aria-hidden","true");
+    sv.setAttribute("width",hr.width); sv.setAttribute("height",hr.height);
+    var segs=[], N=40;
+    for(var i=0;i<N;i++){ var ln=document.createElementNS(NS,"line"); ln.setAttribute("stroke-linecap","round"); sv.appendChild(ln); segs.push(ln); }
+    var head=document.createElementNS(NS,"circle"); head.setAttribute("r","3.6"); head.setAttribute("class","intro-head"); sv.appendChild(head);
+    hero.appendChild(sv);
+    var cfl=document.createElement("i"); cfl.className="intro-flash"; cfl.setAttribute("aria-hidden","true"); hero.appendChild(cfl);
+    var D=1600, DL=250, TAIL=.5, t0=null;
+    function bz(t,i){ t=Math.max(0,t); var u=1-t; return u*u*P0[i]+2*u*t*P1[i]+t*t*P2[i]; }
+    function frame(now){
+      if(t0===null) t0=now; var k=(now-t0-DL)/D;
+      if(k<0){ requestAnimationFrame(frame); return; }
+      if(k>1.15){ sv.remove(); return; }
+      var e=Math.min(1,k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2), fade=k<.1?k/.1:k>.85?Math.max(0,(1.15-k)/.3):1;
+      for(var j=0;j<N;j++){
+        var a1=e-TAIL*(j+1)/N, a0=e-TAIL*j/N;
+        if(a1<0){ segs[j].setAttribute("stroke-opacity","0"); continue; }
+        var f=1-j/N;
+        segs[j].setAttribute("x1",bz(a0,0)); segs[j].setAttribute("y1",bz(a0,1));
+        segs[j].setAttribute("x2",bz(a1,0)); segs[j].setAttribute("y2",bz(a1,1));
+        segs[j].setAttribute("stroke-width",(0.5+2.8*f).toFixed(2));
+        segs[j].setAttribute("stroke-opacity",(Math.pow(f,1.6)*.95*fade).toFixed(3));
+      }
+      head.setAttribute("cx",bz(e,0)); head.setAttribute("cy",bz(e,1)); head.setAttribute("opacity",fade.toFixed(3));
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+    // no landing flash: the star fades out as it comes back down
+    setTimeout(function(){cfl.remove();},DL+D+900);
+    return;
   }
   var ang=Math.atan2(ey-sy,ex-sx)*180/Math.PI;
   var st=document.createElement("i"); st.className="intro-star"; st.setAttribute("aria-hidden","true");
